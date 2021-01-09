@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from tensorflow.keras.layers import Flatten, Dense, Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Flatten, Dense, Conv2D, MaxPooling2D, Dropout
 from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 
 
@@ -19,6 +19,7 @@ def setup_model():
         MaxPooling2D(),
         Conv2D(64, 3, padding='same', activation='relu'),
         MaxPooling2D(),
+        Dropout(0.4),
         Flatten(),
         Dense(128, activation='relu'),
         Dense(num_classes)
@@ -48,7 +49,7 @@ if __name__ == "__main__":
 
     # initialize and fit model to training data
     model = setup_model()
-    model.fit(dataTrain, validation_data=dataVal, epochs=15)
+    model.fit(dataTrain, validation_data=dataVal, epochs=11)
 
     # save the model to a new folder if it doesn't already exist, otherwise overwrite it
     model.save("model_save")
